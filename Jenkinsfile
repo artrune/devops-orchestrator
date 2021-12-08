@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('deploy') {
             steps {
-                bat "docker network create elasticnetwork || true"
+                bat "docker network create elasticnetwork || (exit 0)"
                 bat "docker rm -f elasticsearch || 'echo no running elasticsearch container to remove' "
                 bat "docker rm -f kibana || 'echo no running kibana container to remove' "
                 bat """docker run -d --name elasticsearch --net elasticnetwork -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.14.2"""
